@@ -1,0 +1,10 @@
+version: "1.0"
+services:
+  twitter:
+    image: "taka6745/twitter:latest"
+    ports:
+      - "80:3000"
+    env_file:
+      - keys.env
+  redis:
+    image: "redis:alpine"
