@@ -1,10 +1,36 @@
-version: "1.0"
+version: "3.3"
+
+
+
 services:
+  redis-server:
+    image: "redis:alpine"
+    restart: always
+    container_name: redis-server 
+    
+    volumes: 
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+    
+    ports: 
+    - 6379:6379
+   
+    
+    
   twitter:
     image: "taka6745/twitter:latest"
+    container_name: twitter
+    restart: always
+   
     ports:
       - "80:3000"
     env_file:
       - keys.env
-  redis:
-    image: "redis:alpine"
+    depends_on:
+      - redis-server
+    
+    links:
+    - redis-server
+    
+
+    
